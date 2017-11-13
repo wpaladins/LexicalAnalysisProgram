@@ -28,18 +28,18 @@ public class Analysis {
 	static PrintStream pnewdfa;
 	static PrintStream pnewminidfa;
 	
-	//ä¸ºäº†å­˜å‚¨å…¨éƒ¨çš„è½¬ç§»è¡¨
+	//ÎªÁË´æ´¢È«²¿µÄ×ªÒÆ±í
 	static Set<TransferTable> transferTables;
-	//ä¸ºäº†å­˜å‚¨æºç¨‹åº
+	//ÎªÁË´æ´¢Ô´³ÌĞò
 	static StringBuffer sourceProgram;
-	//ä¸ºäº†å­˜å‚¨Tokenåºåˆ—
+	//ÎªÁË´æ´¢TokenĞòÁĞ
 	static ArrayList<Token> tokens;
-	//ä¸ºäº†èƒ½å¤Ÿå­˜å‚¨å½“å‰æ“ä½œåˆ°æºç¨‹åºçš„ä»€ä¹ˆä½ç½®
+	//ÎªÁËÄÜ¹»´æ´¢µ±Ç°²Ù×÷µ½Ô´³ÌĞòµÄÊ²Ã´Î»ÖÃ
 	static int pointer;
 	
 	public static void main(String[] args) throws FileNotFoundException {
 		
-		//ä¸ºäº†è¾“å‡ºåˆ°æ–‡ä»¶åšä¸€ä¸‹æ“ä½œï¼š
+		//ÎªÁËÊä³öµ½ÎÄ¼ş×öÒ»ÏÂ²Ù×÷£º
 		FileOutputStream fs1 = new FileOutputStream(new File("..\\show\\js\\abuse.js"));
 		FileOutputStream fs2 = new FileOutputStream(new File("..\\show\\js\\abuse.js"));
 		FileOutputStream fs3 = new FileOutputStream(new File("..\\show\\js\\abuse.js"));
@@ -66,26 +66,26 @@ public class Analysis {
 				"    node [rx=5 ry=5 labelStyle=\\\"font: 300 14px 'Helvetica Neue', Helvetica\\\" style=\\\"fill: rgb(179, 226, 10); font-weight: bold\\\"]\\n" + 
 				"    edge [labelStyle=\\\"font: 300 14px 'Helvetica Neue', Helvetica\\\"]\\n");
 		
-		//è¯»å…¥ä¸€ä¸ªæ­£åˆ™è¡¨è¾¾å¼ï¼Œå…è®¸æœ‰(ã€)ã€*ã€|
+		//¶ÁÈëÒ»¸öÕıÔò±í´ïÊ½£¬ÔÊĞíÓĞ(¡¢)¡¢*¡¢|
 		Scanner scanner = new Scanner((Readable) new BufferedReader(new FileReader(".\\input.txt")));
 		String re = scanner.nextLine();
 		scanner.close();
-		//å°†è¯»å…¥çš„å†…å®¹åˆ†å‰²å¹¶å­˜å…¥
+		//½«¶ÁÈëµÄÄÚÈİ·Ö¸î²¢´æÈë
 		String[] array = re.split(" ");
 		re = array[1];
 		System.out.print(re);
 		
-		//å°†reæ‰“å°åˆ°JSæ–‡ä»¶ä¸­
+		//½«re´òÓ¡µ½JSÎÄ¼şÖĞ
 		pre.println("var re = \"" + re + "\";");
 		pre.close();
 		
-		//å°†æ­£åˆ™è¡¨è¾¾å¼ä¸­çš„ä¸è¿ç®—è½¬åŒ–ä¸º+å·
+		//½«ÕıÔò±í´ïÊ½ÖĞµÄÓëÔËËã×ª»¯Îª+ºÅ
 		re = add_join_symbol(re);
 		//System.out.println(re);
 		
-		//å°†æ­£åˆ™è¡¨è¾¾å¼è½¬ä¸ºCell
+		//½«ÕıÔò±í´ïÊ½×ªÎªCell
 		Cell NFA = postfix_expression(re);
-		//å¤„ç†NFAä¸­çš„çŠ¶æ€ï¼Œä¸ºäº†è¾“å‡ºåˆ°jsæ‰åŠ çš„
+		//´¦ÀíNFAÖĞµÄ×´Ì¬£¬ÎªÁËÊä³öµ½js²Å¼ÓµÄ
 		for(Edge e:NFA.edges) {
 			NFA.states.add(e.startState);
 			NFA.states.add(e.endState);
@@ -97,7 +97,7 @@ public class Analysis {
 		NFA.Print();
 		System.out.println("=======================================================================================================");
 		
-		/**********************ä»è¿™é‡Œå¼€å§‹ï¼Œå¼€å§‹å†™NFAè½¬DFAçš„æ“ä½œ**********************/
+		/**********************´ÓÕâÀï¿ªÊ¼£¬¿ªÊ¼Ğ´NFA×ªDFAµÄ²Ù×÷**********************/
 		
 		DFA DFA = NFA2DFAmethod(NFA,re);
 		
@@ -106,7 +106,7 @@ public class Analysis {
 		DFA.Print();
 		System.out.println("=======================================================================================================");
 		
-		/**********************ä»è¿™é‡Œå¼€å§‹ï¼Œå¼€å§‹å†™DFAæœ€å°åŒ–çš„æ“ä½œ**********************/
+		/**********************´ÓÕâÀï¿ªÊ¼£¬¿ªÊ¼Ğ´DFA×îĞ¡»¯µÄ²Ù×÷**********************/
 		
 		miniDFA  miniDFA= MinimizeDFAmethod(DFA,re);
 		
@@ -115,15 +115,15 @@ public class Analysis {
 		miniDFA.Print();
 		System.out.println("=======================================================================================================");
 		
-		//å°†ä¿¡æ¯è¾“å‡ºåˆ°JSå¹¶ä¸”
+		//½«ĞÅÏ¢Êä³öµ½JS²¢ÇÒ
 		NFA.printToJS();
 		DFA.printToJS();
 		miniDFA.printToJS();
-		//pnewçš„æœ€åå¤„ç†
+		//pnewµÄ×îºó´¦Àí
 		pnewnfa.print("}\"");
 		pnewdfa.print("}\"");
 		pnewminidfa.print("}\"");
-		//å…³é—­è¾“å‡ºåˆ°æ–‡ä»¶çš„æŒ‡é’ˆ
+		//¹Ø±ÕÊä³öµ½ÎÄ¼şµÄÖ¸Õë
 		pnfa.close();
 		pdfa.close();
 		pminidfa.close();
@@ -131,7 +131,7 @@ public class Analysis {
 		pnewdfa.close();
 		pnewminidfa.close();
 		
-		/**********************ä»è¿™é‡Œå¼€å§‹ï¼Œå¼€å§‹å†™è¯æ³•åˆ†æç¨‹åºçš„ç”Ÿæˆç¨‹åºçš„æ“ä½œ**********************/
+		/**********************´ÓÕâÀï¿ªÊ¼£¬¿ªÊ¼Ğ´´Ê·¨·ÖÎö³ÌĞòµÄÉú³É³ÌĞòµÄ²Ù×÷**********************/
 		
 		transferTables = new HashSet<TransferTable>();
 		generateTransferTables();
@@ -140,18 +140,18 @@ public class Analysis {
 		printTokens();
 	}
 	
-	//å®Œæˆå°†æ­£åˆ™è¡¨è¾¾å¼ä¸­çš„ä¸è¿ç®—è½¬åŒ–ä¸º+å·(2017/10/18-22:02)
+	//Íê³É½«ÕıÔò±í´ïÊ½ÖĞµÄÓëÔËËã×ª»¯Îª+ºÅ(2017/10/18-22:02)
 	public static String add_join_symbol(String re) {
 		StringBuffer new_re = new StringBuffer();
 		for (int i = 0; i < re.length() - 1; i++) {
 			Character first = re.charAt(i);
 			Character second = re.charAt(i + 1);
 			new_re.append(first);
-			//è‹¥ç¬¬äºŒä¸ªæ˜¯å­—æ¯ã€ç¬¬ä¸€ä¸ªä¸æ˜¯'('ã€'|'éƒ½è¦æ·»åŠ 
+			//ÈôµÚ¶ş¸öÊÇ×ÖÄ¸¡¢µÚÒ»¸ö²»ÊÇ'('¡¢'|'¶¼ÒªÌí¼Ó
 			if (Character.isLetter(second) && !first.equals('(') &&!first.equals('|') ) {
 				new_re.append('+');
 			}
-			//è‹¥ç¬¬äºŒä¸ªæ˜¯'(',ç¬¬ä¸€ä¸ªä¸æ˜¯'|'ã€'(',ä¹Ÿè¦åŠ 
+			//ÈôµÚ¶ş¸öÊÇ'(',µÚÒ»¸ö²»ÊÇ'|'¡¢'(',Ò²Òª¼Ó
 			else if (second.equals('(') && !first.equals('(') &&!first.equals('|') ) {
 				new_re.append('+');
 			}
@@ -160,19 +160,19 @@ public class Analysis {
 		return new_re.toString();
 	}
 	
-	//æ­£åˆ™è¡¨è¾¾å¼çš„ä¼˜å…ˆçº§è¡¨
+	//ÕıÔò±í´ïÊ½µÄÓÅÏÈ¼¶±í
 	static String op_priority[][] = {
-			/*           å½“å‰æ“ä½œç¬¦                   */
+			/*           µ±Ç°²Ù×÷·û                   */
 			/*           +    |    *    (    )    # */
-		{   /* æ ˆ + */  ">", "<", "<", "<", ">", ">"}, //+ 0 ï¼ˆåŒç›®ï¼‰
-		{   /* é¡¶ | */  ">", ">", "<", "<", ">", ">"}, //| 1 ï¼ˆåŒç›®ï¼‰
-		{   /* æ“ * */  ">", ">", ">", "x", ">", ">"}, //* 2 ï¼ˆå•ç›®ï¼‰
-		{   /* åš ( */  "<", "<", "<", "<", "=", "x"}, //( 3 ä¸å¯èƒ½å¤§äºå½“å‰æ“ä½œç¬¦
-		{   /* ç¬¦ ) */  "x", "x", "x", "x", "x", "x"}, //) 4 ä¸å¯èƒ½å‡ºç°åœ¨æ ˆé¡¶
+		{   /* Õ» + */  ">", "<", "<", "<", ">", ">"}, //+ 0 £¨Ë«Ä¿£©
+		{   /* ¶¥ | */  ">", ">", "<", "<", ">", ">"}, //| 1 £¨Ë«Ä¿£©
+		{   /* ²Ù * */  ">", ">", ">", "x", ">", ">"}, //* 2 £¨µ¥Ä¿£©
+		{   /* ×ö ( */  "<", "<", "<", "<", "=", "x"}, //( 3 ²»¿ÉÄÜ´óÓÚµ±Ç°²Ù×÷·û
+		{   /* ·û ) */  "x", "x", "x", "x", "x", "x"}, //) 4 ²»¿ÉÄÜ³öÏÖÔÚÕ»¶¥
 		{   /*    # */  "<", "<", "<", "<", "x", "="}  //# 5
 	};
 	
-	//ä»æ“ä½œç¬¦å·å‘å¯¹åº”æ•°å­—çš„è½¬æ¢
+	//´Ó²Ù×÷·ûºÅÏò¶ÔÓ¦Êı×ÖµÄ×ª»»
 	static int op_symbol2int(String op_symbol) {
 		switch(op_symbol) {
 		case "+":
@@ -191,8 +191,8 @@ public class Analysis {
 		return -1;
 	}
 	
-	//é€šè¿‡æ ˆé¡¶æ“ä½œç¬¦å’Œå½“å‰æ“ä½œç¬¦æŸ¥è¯¢æ ˆé¡¶æ“ä½œç¬¦æ˜¯å¦å¤§äºå½“å‰æ“ä½œç¬¦
-	//åœ¨è¦å®Œæˆä»æ“ä½œç¬¦å·å‘å¯¹åº”æ•°å­—çš„è½¬æ¢
+	//Í¨¹ıÕ»¶¥²Ù×÷·ûºÍµ±Ç°²Ù×÷·û²éÑ¯Õ»¶¥²Ù×÷·ûÊÇ·ñ´óÓÚµ±Ç°²Ù×÷·û
+	//ÔÚÒªÍê³É´Ó²Ù×÷·ûºÅÏò¶ÔÓ¦Êı×ÖµÄ×ª»»
 	static int is_bigger(String op_top, String op_now) {
 		//System.out.println(op_priority[op_symbol2int(op_top)][op_symbol2int(op_now)]);
 		if(op_priority[op_symbol2int(op_top)][op_symbol2int(op_now)].equals(">")) {
@@ -207,14 +207,14 @@ public class Analysis {
 		return -2;
 	}
 	
-	//ç”¨æ¥å¤„ç†*
+	//ÓÃÀ´´¦Àí*
 	static Cell handle(String op_symbol_tohandle, Cell op_char_tohandle) {
-		//æ–°å»ºä¸€ä¸ªå­˜æœ€åç»“æœçš„Cellåä¸ºnewCell
+		//ĞÂ½¨Ò»¸ö´æ×îºó½á¹ûµÄCellÃûÎªnewCell
 		Cell newCell = new Cell();
-		//é€šè¿‡Thompsonç®—æ³•è¿›è¡Œå¤„ç†
+		//Í¨¹ıThompsonËã·¨½øĞĞ´¦Àí
 		newCell.edges.addAll(op_char_tohandle.edges);
 		Edge edge;
-		//æ·»åŠ å››æ¡ç©ºè¾¹
+		//Ìí¼ÓËÄÌõ¿Õ±ß
 		edge = new Edge(newCell.startState,op_char_tohandle.startState);
 		newCell.edges.add(edge);
 		edge = new Edge(op_char_tohandle.endState,newCell.endState);
@@ -226,7 +226,7 @@ public class Analysis {
 		return newCell;
 	}
 	
-	//ç”¨æ¥å¤„ç†+å’Œ|
+	//ÓÃÀ´´¦Àí+ºÍ|
 	static Cell handle(String op_symbol_tohandle,Cell op_char1_tohandle,Cell op_char2_tohandle) {
 		Cell newCell = new Cell();
 		newCell.edges.addAll(op_char1_tohandle.edges);
@@ -260,14 +260,14 @@ public class Analysis {
 		return newCell;
 	}
 	
-	//å®Œæˆæ­£åˆ™è¡¨è¾¾å¼çš„ä¸­ç¼€è¡¨è¾¾å¼
-	//å†™ä¹‹ä¸­éœ€è¦å®Œæˆop_priorityä¼˜å…ˆçº§è¡¨å’Œ
-	//é€šè¿‡æ ˆé¡¶æ“ä½œç¬¦å’Œå½“å‰æ“ä½œç¬¦æŸ¥è¯¢æ ˆé¡¶æ“ä½œç¬¦æ˜¯å¦å¤§äºå½“å‰æ“ä½œç¬¦çš„å‡½æ•°is_bigger
-	//å†™ä¹‹ä¸­éœ€è¦å®Œæˆto_handleç”¨æ¥å¤„ç†
+	//Íê³ÉÕıÔò±í´ïÊ½µÄÖĞ×º±í´ïÊ½
+	//Ğ´Ö®ÖĞĞèÒªÍê³Éop_priorityÓÅÏÈ¼¶±íºÍ
+	//Í¨¹ıÕ»¶¥²Ù×÷·ûºÍµ±Ç°²Ù×÷·û²éÑ¯Õ»¶¥²Ù×÷·ûÊÇ·ñ´óÓÚµ±Ç°²Ù×÷·ûµÄº¯Êıis_bigger
+	//Ğ´Ö®ÖĞĞèÒªÍê³Éto_handleÓÃÀ´´¦Àí
 	static Cell postfix_expression(String re) {
 		StringBuffer new_re = new StringBuffer();
 		new_re = new_re.append(re);
-		new_re = new_re.append("#");//ç»™reä¹‹ååŠ å…¥#
+		new_re = new_re.append("#");//¸øreÖ®ºó¼ÓÈë#
 		//System.out.println(new_re);
 		
 		//delete : Stack<String> op_char = new Stack<String>();
@@ -277,20 +277,20 @@ public class Analysis {
 		
 		int i;
 		String reg = "+|*()#";
-		//æŒ‰ç…§è§„åˆ™è¿›è¡Œå¤„ç†
+		//°´ÕÕ¹æÔò½øĞĞ´¦Àí
 		for(i = 0 ; i < new_re.length(); i++) {
 			Character c = new_re.charAt(i);
 			//System.out.print(reg.indexOf(c) != -1);
-			if(reg.indexOf(c) != -1) {//åˆ¤æ–­æ˜¯ä¸æ˜¯æ“ä½œç¬¦ï¼Œå¦‚æœæ˜¯çš„è¯
+			if(reg.indexOf(c) != -1) {//ÅĞ¶ÏÊÇ²»ÊÇ²Ù×÷·û£¬Èç¹ûÊÇµÄ»°
 				//System.out.print(is_bigger(op_symbol.peek(),c.toString()) == 1);
-				while(is_bigger(op_symbol.peek(),c.toString()) == 1) {//å¦‚æœæ ˆå†…æ“ä½œç¬¦æ¯”å½“å‰æ“ä½œç¬¦çš„ä¼˜å…ˆçº§é«˜çš„è¯
+				while(is_bigger(op_symbol.peek(),c.toString()) == 1) {//Èç¹ûÕ»ÄÚ²Ù×÷·û±Èµ±Ç°²Ù×÷·ûµÄÓÅÏÈ¼¶¸ßµÄ»°
 					String op_symbol_tohandle = op_symbol.pop();
-					if(op_symbol_tohandle.equals("*")) {//å¦‚æœæ ˆå†…æ“ä½œç¬¦æ˜¯*çš„è¯
+					if(op_symbol_tohandle.equals("*")) {//Èç¹ûÕ»ÄÚ²Ù×÷·ûÊÇ*µÄ»°
 						Cell op_char_cell_tohandle = op_char_cell.pop();
 						Cell newCell = handle(op_symbol_tohandle,op_char_cell_tohandle);
 						op_char_cell.push(newCell);
 					}
-					else {//å¦‚æœæ ˆå†…æ“ä½œç¬¦æ˜¯+æˆ–è€…|çš„è¯
+					else {//Èç¹ûÕ»ÄÚ²Ù×÷·ûÊÇ+»òÕß|µÄ»°
 						Cell op_char2_cell_tohandle = op_char_cell.pop();
 						Cell op_char1_cell_tohandle = op_char_cell.pop();
 						Cell newCell = handle(op_symbol_tohandle,op_char1_cell_tohandle,op_char2_cell_tohandle);
@@ -304,7 +304,7 @@ public class Analysis {
 					op_symbol.pop();
 				}
 			}
-			else {//å¦‚æœä¸æ˜¯æ“ä½œç¬¦çš„è¯
+			else {//Èç¹û²»ÊÇ²Ù×÷·ûµÄ»°
 				Cell newCell = new Cell(c.toString());
 				op_char_cell.push(newCell);
 			}
@@ -313,12 +313,12 @@ public class Analysis {
 		return op_char_cell.peek();
 	}
 	
-	/**********************ä»è¿™é‡Œå¼€å§‹ï¼Œå¼€å§‹å†™NFAè½¬DFAçš„å‡½æ•°**********************/
+	/**********************´ÓÕâÀï¿ªÊ¼£¬¿ªÊ¼Ğ´NFA×ªDFAµÄº¯Êı**********************/
 	
-	//æ±‚çŠ¶æ€çš„epsé—­åŒ…
+	//Çó×´Ì¬µÄeps±Õ°ü
 	static Set<State> eps_closure(State startState,Cell NFA) {
-		Set<State> new_state_set = new HashSet<State>();//ç”¨æ¥å­˜å‚¨éœ€è¦éœ€è¦è¿”å›çš„æ‰€æœ‰çŠ¶æ€çš„é›†åˆ
-		Queue<State> states_tohandle = new LinkedList<State>();//ç”¨æ¥å­˜å‚¨éœ€è¦åˆ¤æ–­æ˜¯ä¸æ˜¯åœ¨eps
+		Set<State> new_state_set = new HashSet<State>();//ÓÃÀ´´æ´¢ĞèÒªĞèÒª·µ»ØµÄËùÓĞ×´Ì¬µÄ¼¯ºÏ
+		Queue<State> states_tohandle = new LinkedList<State>();//ÓÃÀ´´æ´¢ĞèÒªÅĞ¶ÏÊÇ²»ÊÇÔÚeps
 		new_state_set.add(startState);
 		states_tohandle.add(startState);	
 		
@@ -335,7 +335,7 @@ public class Analysis {
 		return new_state_set;
 	}
 	
-	//æ±‚NFAä¸­ä»DFA_State tä¸­çš„æ¯ä¸€ä¸ªçŠ¶æ€å‡ºå‘ï¼Œç»è¿‡è½¬æ¢å­—ç¬¦cåˆ°è¾¾çš„æ‰€æœ‰çŠ¶æ€çš„é›†åˆ
+	//ÇóNFAÖĞ´ÓDFA_State tÖĞµÄÃ¿Ò»¸ö×´Ì¬³ö·¢£¬¾­¹ı×ª»»×Ö·ûcµ½´ïµÄËùÓĞ×´Ì¬µÄ¼¯ºÏ
 	static Set<State> delta(DFA_State t,Character c,Cell NFA) {
 		Set<State> newStateSet = new HashSet<State>();
 		for(State startState:t.states) {
@@ -348,7 +348,7 @@ public class Analysis {
 		return newStateSet;
 	}
 	
-	//æ±‚æ‰€æœ‰statesé›†åˆä¸­çš„çŠ¶æ€åœ¨NFAä¸­çš„epsé—­åŒ…ï¼Œå¹¶å°†æœ€ç»ˆçš„æ‰€æœ‰ç»“æœä½œä¸ºä¸€ä¸ªé›†åˆè¿”å›
+	//ÇóËùÓĞstates¼¯ºÏÖĞµÄ×´Ì¬ÔÚNFAÖĞµÄeps±Õ°ü£¬²¢½«×îÖÕµÄËùÓĞ½á¹û×÷ÎªÒ»¸ö¼¯ºÏ·µ»Ø
 	static Set<State> eps_closure(Set<State> states,Cell NFA) {
 		Set<State> newStateSet = new HashSet<State>();
 		newStateSet.addAll(states);
@@ -358,10 +358,10 @@ public class Analysis {
 		return newStateSet;
 	}
 	
-	//get_newq_InQï¼Œè¿”å›åœ¨Qä¸­ä¸newqä¸­å†…å®¹ç›¸åŒçš„DFA_State
+	//get_newq_InQ£¬·µ»ØÔÚQÖĞÓënewqÖĞÄÚÈİÏàÍ¬µÄDFA_State
 	static DFA_State get_newq_InQ(Set<DFA_State> Q,DFA_State newq) {
 		for(DFA_State q: Q) {
-			if(q.states.size() != newq.states.size()) {//å¦‚æœé•¿åº¦ä¸åŒï¼Œç›´æ¥ä¸åšåˆ¤æ–­
+			if(q.states.size() != newq.states.size()) {//Èç¹û³¤¶È²»Í¬£¬Ö±½Ó²»×öÅĞ¶Ï
 				continue;
 			}
 			int num = 0;
@@ -377,7 +377,7 @@ public class Analysis {
 		return null;
 	}
 	
-	//isNotInDFAEdges(DFA_Edge,DFA)ï¼Œåˆ¤æ–­è¾¹DFA_Edgeåœ¨DFAä¸­æ˜¯å¦å­˜åœ¨
+	//isNotInDFAEdges(DFA_Edge,DFA)£¬ÅĞ¶Ï±ßDFA_EdgeÔÚDFAÖĞÊÇ·ñ´æÔÚ
 	static boolean isNotInDFAEdges(DFA_Edge newDFAEdge,DFA newDFA) {
 		for(DFA_Edge DE: newDFA.DFAEdges) {
 			if(DE.startDFAState.equals(newDFAEdge.startDFAState) & DE.endDFAState.equals(newDFAEdge.endDFAState) ) {
@@ -387,29 +387,29 @@ public class Analysis {
 		return true;
 	}
 	
-	//å†™çš„è¿‡ç¨‹ä¸­éœ€è¦å®Œæˆçš„å‡½æ•°
-	//eps_closure(startState,NFA)ï¼Œå®ç°æ±‚ä¸€ä¸ªçŠ¶æ€å†NFAä¸­çš„epsé—­åŒ…
-	//delta(DFA_State t,c,NFA)ï¼Œå®ç°æ±‚NFAä¸­ä»DFA_State tä¸­çš„æ¯ä¸€ä¸ªçŠ¶æ€å‡ºå‘ï¼Œç»è¿‡è½¬æ¢å­—ç¬¦cåˆ°è¾¾çš„é…¥æ²¹çŠ¶æ€çš„é›†åˆ
-	//eps_closure(Set<State> states,NFA)ï¼Œæ±‚æ‰€æœ‰statesé›†åˆä¸­çš„çŠ¶æ€åœ¨NFAä¸­çš„epsé—­åŒ…ï¼Œå¹¶å°†æœ€ç»ˆçš„æ‰€æœ‰ç»“æœä½œä¸ºä¸€ä¸ªé›†åˆè¿”å›
-	//get_newq_InQï¼Œè¿”å›åœ¨Qä¸­ä¸newqä¸­å†…å®¹ç›¸åŒçš„DFA_State
-	//isNotInDFAEdges(DFA_Edge,DFA)ï¼Œåˆ¤æ–­è¾¹DFA_Edgeåœ¨DFAä¸­æ˜¯å¦å­˜åœ¨
+	//Ğ´µÄ¹ı³ÌÖĞĞèÒªÍê³ÉµÄº¯Êı
+	//eps_closure(startState,NFA)£¬ÊµÏÖÇóÒ»¸ö×´Ì¬ÔÙNFAÖĞµÄeps±Õ°ü
+	//delta(DFA_State t,c,NFA)£¬ÊµÏÖÇóNFAÖĞ´ÓDFA_State tÖĞµÄÃ¿Ò»¸ö×´Ì¬³ö·¢£¬¾­¹ı×ª»»×Ö·ûcµ½´ïµÄËÖÓÍ×´Ì¬µÄ¼¯ºÏ
+	//eps_closure(Set<State> states,NFA)£¬ÇóËùÓĞstates¼¯ºÏÖĞµÄ×´Ì¬ÔÚNFAÖĞµÄeps±Õ°ü£¬²¢½«×îÖÕµÄËùÓĞ½á¹û×÷ÎªÒ»¸ö¼¯ºÏ·µ»Ø
+	//get_newq_InQ£¬·µ»ØÔÚQÖĞÓënewqÖĞÄÚÈİÏàÍ¬µÄDFA_State
+	//isNotInDFAEdges(DFA_Edge,DFA)£¬ÅĞ¶Ï±ßDFA_EdgeÔÚDFAÖĞÊÇ·ñ´æÔÚ
 	static DFA NFA2DFAmethod (Cell NFA,String re) {
-		//æ–°å»ºäº†ä¸€ä¸ªæ–°çš„DFAæ¥å­˜å‚¨æ¥ä¸‹æ¥çš„ä¸€åˆ‡å¯¹DFAçš„åˆ›å»ºæ“ä½œ
+		//ĞÂ½¨ÁËÒ»¸öĞÂµÄDFAÀ´´æ´¢½ÓÏÂÀ´µÄÒ»ÇĞ¶ÔDFAµÄ´´½¨²Ù×÷
 		DFA newDFA = new DFA();
-		//é‡Œé¢è£…äº†æ‰€æœ‰çŠ¶æ€çš„é›†åˆï¼Œä¸ºäº†åˆ¤æ–­çŠ¶æ€æ˜¯ä¸æ˜¯å·²ç»å­˜åœ¨
+		//ÀïÃæ×°ÁËËùÓĞ×´Ì¬µÄ¼¯ºÏ£¬ÎªÁËÅĞ¶Ï×´Ì¬ÊÇ²»ÊÇÒÑ¾­´æÔÚ
 		Set<DFA_State> Q = new HashSet<DFA_State>();
-		//é‡Œé¢è£…äº†è¿˜æ²¡æœ‰è¢«å¤„ç†çš„çŠ¶æ€æ€ç»„æˆçš„é˜Ÿåˆ—
+		//ÀïÃæ×°ÁË»¹Ã»ÓĞ±»´¦ÀíµÄ×´Ì¬Ì¬×é³ÉµÄ¶ÓÁĞ
 		Queue<DFA_State> worklist = new LinkedList<DFA_State>();
 		
-		//åˆ›å»ºDFAçš„ç¬¬ä¸€ä¸ªçŠ¶æ€å¹¶ä¸”å°†å®ƒæ”¾å…¥DFAä¸­
+		//´´½¨DFAµÄµÚÒ»¸ö×´Ì¬²¢ÇÒ½«Ëü·ÅÈëDFAÖĞ
 		DFA_State q0 = new DFA_State(eps_closure(NFA.startState,NFA),NFA);
 		Q.add(q0);worklist.add(q0);
 		
-		//ä¸ºäº†æ‰¾å‡ºæ­£åˆ™è¡¨è¾¾å¼ä¸­çš„éç¬¦å·çš„ï¼Œåˆ›å»ºä¸€ä¸ªç¬¦å·éƒ½åœ¨çš„å­—ç¬¦ä¸²
+		//ÎªÁËÕÒ³öÕıÔò±í´ïÊ½ÖĞµÄ·Ç·ûºÅµÄ£¬´´½¨Ò»¸ö·ûºÅ¶¼ÔÚµÄ×Ö·û´®
 		String op = "+|()*";
 		while(!worklist.isEmpty()) {
 			DFA_State q = worklist.poll();
-			for(int i = 0;i < re.length();i++) {//å¯¹æ¯ä¸ªæ­£åˆ™è¡¨è¾¾å¼ä¸­å‡ºç°è¿‡çš„è½¬æ¢å­—ç¬¦çš„å€¼ï¼Œè¿›è¡Œåˆ¤æ–­
+			for(int i = 0;i < re.length();i++) {//¶ÔÃ¿¸öÕıÔò±í´ïÊ½ÖĞ³öÏÖ¹ıµÄ×ª»»×Ö·ûµÄÖµ£¬½øĞĞÅĞ¶Ï
 				if(op.indexOf(re.charAt(i)) != -1) {
 					continue;
 				}
@@ -437,7 +437,7 @@ public class Analysis {
 		return newDFA;
 	}
 	
-	/**********************ä»è¿™é‡Œå¼€å§‹ï¼Œå¼€å§‹å†™DFAæœ€å°åŒ–çš„å‡½æ•°**********************/
+	/**********************´ÓÕâÀï¿ªÊ¼£¬¿ªÊ¼Ğ´DFA×îĞ¡»¯µÄº¯Êı**********************/
 	
 	static miniDFAState getMiniDFAStateDFAStateIn(DFA_State DFAState,Set<miniDFAState> miniDFAStatesNow) {
 		for(miniDFAState MDS: miniDFAStatesNow) {
@@ -448,21 +448,21 @@ public class Analysis {
 		return null;
 	}
 	
-	//åœ¨å†™ä¹‹å‰éœ€å®ŒæˆgetMiniDFAStateDFAStateIn()å‡½æ•°
+	//ÔÚĞ´Ö®Ç°ĞèÍê³ÉgetMiniDFAStateDFAStateIn()º¯Êı
 	static Set<miniDFAState> split(miniDFAState mDS,String re,DFA DFA,Set<miniDFAState> miniDFAStatesNow) {
 		Set<miniDFAState> newMiniDFAStateSet = new HashSet<miniDFAState>();
 		
-		//å¯¹äºæ¯ä¸€ä¸ªè½¬æ¢å­—ç¬¦
+		//¶ÔÓÚÃ¿Ò»¸ö×ª»»×Ö·û
 		String op = "+|()*";
 		for(int i = 0;i < re.length();i++) {
 			if(op.indexOf(re.charAt(i)) != -1) {
 				continue;
 			}
 			
-			//æ­¤å¤„è¡¨ç¤ºre.charAt(i)å·²ç»æ˜¯ä¸€ä¸ªtransSymbol
+			//´Ë´¦±íÊ¾re.charAt(i)ÒÑ¾­ÊÇÒ»¸ötransSymbol
 			Character ch = re.charAt(i);
 			
-			//ç”¨é”®å€¼å¯¹æ¥å­˜å‚¨æ¯ä¸€ä¸ªçŠ¶æ€ä»¥åŠå®ƒé€šè¿‡å½“å‰è½¬æ¢å­—ç¬¦åˆ°è¾¾çš„miniDFAState
+			//ÓÃ¼üÖµ¶ÔÀ´´æ´¢Ã¿Ò»¸ö×´Ì¬ÒÔ¼°ËüÍ¨¹ıµ±Ç°×ª»»×Ö·ûµ½´ïµÄminiDFAState
 			HashMap<DFA_State,miniDFAState> map = new HashMap<DFA_State,miniDFAState>();
 			for(DFA_Edge DFAEdge:DFA.DFAEdges) {
 				if(mDS.DFAStates.contains(DFAEdge.startDFAState) && DFAEdge.transSymbol.equals(ch.toString())) {
@@ -477,7 +477,7 @@ public class Analysis {
 				}
 			}
 			
-			//åˆ¤æ–­mapçš„å€¼ä¸­æœ‰å‡ ç§miniDFAStateäº†
+			//ÅĞ¶ÏmapµÄÖµÖĞÓĞ¼¸ÖÖminiDFAStateÁË
 			Set<miniDFAState> newSetMiniDFAState = new HashSet<miniDFAState>();
 			for(DFA_State DS: map.keySet()) {
 				newSetMiniDFAState.add(map.get(DS));
@@ -487,15 +487,15 @@ public class Analysis {
 			if(numberOfMiniDFAState == 1) {
 				continue;
 			} else {
-				for(miniDFAState MDS: newSetMiniDFAState) {//å¯¹äºæ¯ä¸€ä¸ªæœ€ç»ˆçŠ¶æ€
-					miniDFAState newMiniDFAState = new miniDFAState();//æ–°å»ºä¸€ä¸ªminiDFAState
-					for(DFA_State DS: map.keySet()) {//åˆ¤æ–­mapä¸­çš„æ¯ä¸€ä¸ªé”®å€¼å¯¹
-						//å¦‚æœå½“å‰å€¼ä¸ºMDSï¼Œåˆ™å°†é”®åŠ å…¥æ–°çš„newMiniDFAStateçš„DFAStatesä¸­
+				for(miniDFAState MDS: newSetMiniDFAState) {//¶ÔÓÚÃ¿Ò»¸ö×îÖÕ×´Ì¬
+					miniDFAState newMiniDFAState = new miniDFAState();//ĞÂ½¨Ò»¸öminiDFAState
+					for(DFA_State DS: map.keySet()) {//ÅĞ¶ÏmapÖĞµÄÃ¿Ò»¸ö¼üÖµ¶Ô
+						//Èç¹ûµ±Ç°ÖµÎªMDS£¬Ôò½«¼ü¼ÓÈëĞÂµÄnewMiniDFAStateµÄDFAStatesÖĞ
 						if(map.get(DS) == MDS) {
 							newMiniDFAState.DFAStates.add(DS);
 						}
 					}
-					//å°†newMiniDFAStateåŠ å…¥åˆ°newMiniDFAStateSet
+					//½«newMiniDFAState¼ÓÈëµ½newMiniDFAStateSet
 					newMiniDFAStateSet.add(newMiniDFAState);
 				}
 			}
@@ -505,47 +505,47 @@ public class Analysis {
 		return newMiniDFAStateSet;
 	}
 	
-	//å†™çš„è¿‡ç¨‹ä¸­éœ€è¦å®Œæˆçš„å‡½æ•°
+	//Ğ´µÄ¹ı³ÌÖĞĞèÒªÍê³ÉµÄº¯Êı
 	//split
 	static miniDFA MinimizeDFAmethod(DFA DFA,String re) {
 		miniDFA newMiniDFA = new miniDFA();
-		/**åœ¨è¿™é‡Œå®ç°hopcroftç®—æ³•**/
-		//æ–°å»ºminiDFAStateçŠ¶æ€Nå’ŒAå¹¶åˆå§‹åŒ–
+		/**ÔÚÕâÀïÊµÏÖhopcroftËã·¨**/
+		//ĞÂ½¨miniDFAState×´Ì¬NºÍA²¢³õÊ¼»¯
 		miniDFAState N = new miniDFAState(), A = new miniDFAState();
 		for(DFA_State DS: DFA.DFAStates) {
-			if(DS.isExitState) {//å¯æ¥å—çŠ¶æ€ï¼Œè¿›å…¥A
+			if(DS.isExitState) {//¿É½ÓÊÜ×´Ì¬£¬½øÈëA
 				A.DFAStates.add(DS);
 			}
 			else {
 				N.DFAStates.add(DS);
 			}
 		}
-		//æ–°å»ºå¤„ç†é˜Ÿåˆ—ä»¥åŠæœ€ç»ˆçš„miniDFAStateé›†åˆ
-		Set<miniDFAState> miniDFAStates =  new HashSet<miniDFAState>();//ç”¨æ¥å­˜å‚¨æœ€ç»ˆçš„miniDFAState
+		//ĞÂ½¨´¦Àí¶ÓÁĞÒÔ¼°×îÖÕµÄminiDFAState¼¯ºÏ
+		Set<miniDFAState> miniDFAStates =  new HashSet<miniDFAState>();//ÓÃÀ´´æ´¢×îÖÕµÄminiDFAState
 		LinkedList<miniDFAState> worklist = new LinkedList<miniDFAState>();
-		Set<miniDFAState> miniDFAStatesNow =  new HashSet<miniDFAState>();//ç”¨æ¥å­˜å‚¨å½“å‰çš„miniDFAState
-		//å°†Nå’ŒAæ·»åŠ åˆ°å¤„ç†é˜Ÿåˆ—ä¸­
+		Set<miniDFAState> miniDFAStatesNow =  new HashSet<miniDFAState>();//ÓÃÀ´´æ´¢µ±Ç°µÄminiDFAState
+		//½«NºÍAÌí¼Óµ½´¦Àí¶ÓÁĞÖĞ
 		worklist.add(N);worklist.add(A);miniDFAStatesNow.add(A);miniDFAStatesNow.add(N);
-		//å¼€å§‹å¤„ç†
-		while(!worklist.isEmpty()) {//å¦‚æœworklistä¸ç©ºï¼Œåˆ™è¯´æ˜è¿˜æœ‰æ²¡æœ‰å¤„ç†å®Œçš„çŠ¶æ€
-			miniDFAState DS = worklist.pop();//æ‹¿å‡ºæ¥ä¸€ä¸ªæ¥å¤„ç†
-			Set<miniDFAState> newMiniDFAState = split(DS,re,DFA,miniDFAStatesNow);//å»åˆ†å‰²ä¸€æ¬¡
-			if(newMiniDFAState.size() == 1) {//å¦‚æœè¿”å›çš„é›†åˆçš„sizeä¸º1ï¼Œåˆ™ä¸ºminiDFAçŠ¶æ€
+		//¿ªÊ¼´¦Àí
+		while(!worklist.isEmpty()) {//Èç¹ûworklist²»¿Õ£¬ÔòËµÃ÷»¹ÓĞÃ»ÓĞ´¦ÀíÍêµÄ×´Ì¬
+			miniDFAState DS = worklist.pop();//ÄÃ³öÀ´Ò»¸öÀ´´¦Àí
+			Set<miniDFAState> newMiniDFAState = split(DS,re,DFA,miniDFAStatesNow);//È¥·Ö¸îÒ»´Î
+			if(newMiniDFAState.size() == 1) {//Èç¹û·µ»ØµÄ¼¯ºÏµÄsizeÎª1£¬ÔòÎªminiDFA×´Ì¬
 				miniDFAStates.addAll(newMiniDFAState);
 			}
-			else {//å¦‚æœä¸æ˜¯1ï¼Œåˆ™å°†å…¶ä¸­çš„æ¯ä¸€ä¸ªæ–°çš„çŠ¶æ€æ·»åŠ åˆ°worklistä¸­ç­‰å¾…å¤„ç†
+			else {//Èç¹û²»ÊÇ1£¬Ôò½«ÆäÖĞµÄÃ¿Ò»¸öĞÂµÄ×´Ì¬Ìí¼Óµ½worklistÖĞµÈ´ı´¦Àí
 				for(miniDFAState mDS: newMiniDFAState) {
 					worklist.add(mDS);
 					miniDFAStatesNow.add(mDS);
 				}
 			}
 		}
-		//ä¸ºæ¯ä¸€ä¸ªminiDFAStateèµ·åå­—å¹¶ä¸”åˆ¤æ–­å¹¶è®¾ç½®å®ƒæ˜¯ä¸æ˜¯å¯æ¥å—çŠ¶æ€æˆ–è€…è¿›å…¥çŠ¶æ€
+		//ÎªÃ¿Ò»¸öminiDFAStateÆğÃû×Ö²¢ÇÒÅĞ¶Ï²¢ÉèÖÃËüÊÇ²»ÊÇ¿É½ÓÊÜ×´Ì¬»òÕß½øÈë×´Ì¬
 		for(miniDFAState mDS: miniDFAStates) {
 			mDS.set();
 		}
-		//é€šè¿‡å¯¹DFAä¸­çš„æ¯ä¸€æ¡è¾¹çš„éå†åˆ¤æ–­ï¼Œä¸ºminiDFAå¢åŠ è¾¹
-		//é¦–å…ˆå»ºç«‹DFAä¸­æ¯ä¸€ä¸ªçŠ¶æ€åˆ°miniDFAä¸­çŠ¶æ€çš„é”®å€¼è½¬æ¢å…³ç³»
+		//Í¨¹ı¶ÔDFAÖĞµÄÃ¿Ò»Ìõ±ßµÄ±éÀúÅĞ¶Ï£¬ÎªminiDFAÔö¼Ó±ß
+		//Ê×ÏÈ½¨Á¢DFAÖĞÃ¿Ò»¸ö×´Ì¬µ½miniDFAÖĞ×´Ì¬µÄ¼üÖµ×ª»»¹ØÏµ
 		HashMap<DFA_State,miniDFAState> map = new HashMap<DFA_State,miniDFAState>();
 		for(miniDFAState mDS: miniDFAStates) {
 			for(DFA_State DS: mDS.DFAStates) {
@@ -557,7 +557,7 @@ public class Analysis {
 			miniDFAEdge newMiniDFAEdge = new miniDFAEdge(map.get(DE.startDFAState),map.get(DE.endDFAState),DE.transSymbol);
 			miniDFAEdges.add(newMiniDFAEdge);
 		}
-		//å»é™¤é‡å¤çš„è¾¹
+		//È¥³ıÖØ¸´µÄ±ß
 		for(int i = 0; i < miniDFAEdges.size(); i++) {
 			boolean flag = false;
 			for(int j = i + 1; j< miniDFAEdges.size(); j++) {
@@ -567,59 +567,59 @@ public class Analysis {
 					break;
 				}
 			}
-			if(flag) {//åˆ äº†ä¹‹åéœ€è¦åˆ é™¤å½“å‰å…ƒç´ ï¼Œæ‰€ä»¥i-1ä¸€ä¸‹ï¼Œè¿™æ ·æ‰ä¸ä¼šæœ‰é—æ¼
+			if(flag) {//É¾ÁËÖ®ºóĞèÒªÉ¾³ıµ±Ç°ÔªËØ£¬ËùÒÔi-1Ò»ÏÂ£¬ÕâÑù²Å²»»áÓĞÒÅÂ©
 				i--;
 			}
 		}
-		//å°†ç»“æœæ·»åŠ ä¿å­˜åˆ°newMiniDFAä¸­
+		//½«½á¹ûÌí¼Ó±£´æµ½newMiniDFAÖĞ
 		newMiniDFA.miniDFAStates.addAll(miniDFAStates);
 		newMiniDFA.miniDFAEdges.addAll(miniDFAEdges);
 		return newMiniDFA;
 	}
 	
-	/**********************ä»è¿™é‡Œå¼€å§‹ï¼Œå¼€å§‹å†™è¯æ³•åˆ†æç¨‹åºçš„ç”Ÿæˆç¨‹åºçš„å‡½æ•°**********************/
+	/**********************´ÓÕâÀï¿ªÊ¼£¬¿ªÊ¼Ğ´´Ê·¨·ÖÎö³ÌĞòµÄÉú³É³ÌĞòµÄº¯Êı**********************/
 	
 	static void generateTransferTables() throws FileNotFoundException {
-		//1. ä¸€è¡Œä¸€è¡Œè¯»å…¥æ­£åˆ™è¡¨è¾¾å¼ä»¬
+		//1. Ò»ĞĞÒ»ĞĞ¶ÁÈëÕıÔò±í´ïÊ½ÃÇ
 		Scanner scanner = new Scanner((Readable) new BufferedReader(new FileReader(".\\input.txt")));
 		ArrayList<String> res = new ArrayList<String>();
 		while(scanner.hasNextLine()) {
 			res.add(scanner.nextLine());
 		}
-		//å…³é—­scanner
+		//¹Ø±Õscanner
 		scanner.close();
-		//2. å¯¹æ¯ä¸€ä¸ªæ­£åˆ™è¡¨è¾¾å¼ï¼Œè¿›è¡Œåˆ†æå¾—åˆ°å…¶MiniDFA
+		//2. ¶ÔÃ¿Ò»¸öÕıÔò±í´ïÊ½£¬½øĞĞ·ÖÎöµÃµ½ÆäMiniDFA
 		for(String re: res){
-			//æ–°å»ºè¡¨
+			//ĞÂ½¨±í
 			TransferTable newTable = new TransferTable();
 			
-			//å°†è¯»å…¥çš„å†…å®¹åˆ†å‰²å¹¶å­˜å…¥
+			//½«¶ÁÈëµÄÄÚÈİ·Ö¸î²¢´æÈë
 			String[] array = re.split(" ");
 			newTable.tableName = array[0];
 			re = array[1];
-			//å¦‚æœtableNameä¸æ˜¯punctuationã€numberã€reservedWordã€idä¸­çš„æŸä¸€ä¸ªï¼Œcontinueï¼›
+			//Èç¹ûtableName²»ÊÇpunctuation¡¢number¡¢reservedWord¡¢idÖĞµÄÄ³Ò»¸ö£¬continue£»
 			if(!newTable.tableName.equals("punctuation") && !newTable.tableName.equals("number") && !newTable.tableName.equals("reservedWord") && !newTable.tableName.equals("id")) {
 				continue;
 			}
 			
 			//System.out.println(re);
 			
-			//è½¬æ¢æˆMiniDFA
+			//×ª»»³ÉMiniDFA
 			re = add_join_symbol(re);
 			Cell NFA = postfix_expression(re);
 			DFA DFA = NFA2DFAmethod(NFA,re);
 			miniDFA  miniDFA= MinimizeDFAmethod(DFA,re);
 			
-			//3. å°†æ¯ä¸€ä¸ªå¾—åˆ°çš„MiniDFAè½¬æ¢æˆè¡¨ï¼Œå¹¶åŠ å…¥åˆ°transferTables
-			//æ–°å»ºè¡¨çš„æ¯ä¸€è¡Œ
-			for(miniDFAState mDS: miniDFA.miniDFAStates) {//å¯¹äºæ¯ä¸€ä¸ªèŠ‚ç‚¹
-				HashMap<String,String> newLine = new HashMap<String,String>();//æ–°å»ºä¸€è¡Œ
-				for(miniDFAEdge mDE: miniDFA.miniDFAEdges) {//å¯¹äºæ¯ä¸€æ¡è¾¹
-					if(mDE.startMiniDFAState == mDS) {//å¦‚æœè¾¹çš„èµ·å§‹èŠ‚ç‚¹æ˜¯è¿™ä¸ªèŠ‚ç‚¹
-						newLine.put(mDE.transSymbol, mDE.endMiniDFAState.miniDFAStateName);//æ–°å»ºä¸€ä¸ªé”®å€¼å¯¹ï¼Œé”®ä¸ºè½¬æ¢å­—ç¬¦ï¼Œå€¼ä¸ºåˆ°è¾¾çš„èŠ‚ç‚¹ï¼Œå¹¶å°†é”®å€¼å¯¹åŠ å…¥åˆ°è¿™ä¸€è¡Œ
+			//3. ½«Ã¿Ò»¸öµÃµ½µÄMiniDFA×ª»»³É±í£¬²¢¼ÓÈëµ½transferTables
+			//ĞÂ½¨±íµÄÃ¿Ò»ĞĞ
+			for(miniDFAState mDS: miniDFA.miniDFAStates) {//¶ÔÓÚÃ¿Ò»¸ö½Úµã
+				HashMap<String,String> newLine = new HashMap<String,String>();//ĞÂ½¨Ò»ĞĞ
+				for(miniDFAEdge mDE: miniDFA.miniDFAEdges) {//¶ÔÓÚÃ¿Ò»Ìõ±ß
+					if(mDE.startMiniDFAState == mDS) {//Èç¹û±ßµÄÆğÊ¼½ÚµãÊÇÕâ¸ö½Úµã
+						newLine.put(mDE.transSymbol, mDE.endMiniDFAState.miniDFAStateName);//ĞÂ½¨Ò»¸ö¼üÖµ¶Ô£¬¼üÎª×ª»»×Ö·û£¬ÖµÎªµ½´ïµÄ½Úµã£¬²¢½«¼üÖµ¶Ô¼ÓÈëµ½ÕâÒ»ĞĞ
 					}
 				}
-				newTable.lines.put(mDS.miniDFAStateName, newLine);//å°†è¿™ä¸€è¡ŒåŠ å…¥åˆ°è¡¨ä¸­
+				newTable.lines.put(mDS.miniDFAStateName, newLine);//½«ÕâÒ»ĞĞ¼ÓÈëµ½±íÖĞ
 				if(mDS.isEnterState) {
 					newTable.enterState = mDS.miniDFAStateName;
 				}
@@ -671,7 +671,7 @@ public class Analysis {
 			return null;
 		}
 		
-		//ä»pointerå¼€å§‹å¾€åç»§ç»­
+		//´Ópointer¿ªÊ¼Íùºó¼ÌĞø
 		while(state != null) {
 			ch = sourceProgram.charAt(pointer);
 			pointer++;
@@ -702,7 +702,7 @@ public class Analysis {
 			return null;
 		}
 		
-		//å°†æ•°æ®åŠ å…¥åˆ°tokenValueä¸­
+		//½«Êı¾İ¼ÓÈëµ½tokenValueÖĞ
 		if(transferTable.tableName.equals("id")) {
 			newToken.type = "id";
 			newToken.name = tokenValue.toString();
@@ -734,7 +734,7 @@ public class Analysis {
 	}
 }
 
-/**********************ä»¥ä¸‹ç±»ä¸ºäº†RE2NFA**********************/
+/**********************ÒÔÏÂÀàÎªÁËRE2NFA**********************/
 
 class State {
 	static int number = 0;
@@ -797,7 +797,7 @@ class Edge {
 
 class Cell {
 	Set<Edge> edges;
-	Set<State> states;//ä¸ºäº†æ–¹ä¾¿è¾“å‡ºåˆ°jsæ–‡ä»¶ä¸­
+	Set<State> states;//ÎªÁË·½±ãÊä³öµ½jsÎÄ¼şÖĞ
 	State startState;
 	State endState;
 	
@@ -841,13 +841,13 @@ class Cell {
 	}
 }
 
-/**********************ä»¥ä¸‹ç±»ä¸ºäº†NFA2DFA**********************/
+/**********************ÒÔÏÂÀàÎªÁËNFA2DFA**********************/
 
 class DFA_State {
 	static int number = 0;
 	String DFAStateName;
 	Set<State> states;
-	//è®¾ç½®çŠ¶æ€æ˜¯ä¸æ˜¯å…¥å£çŠ¶æ€å’Œå‡ºå£çŠ¶æ€
+	//ÉèÖÃ×´Ì¬ÊÇ²»ÊÇÈë¿Ú×´Ì¬ºÍ³ö¿Ú×´Ì¬
 	boolean isEnterState = false;
 	boolean isExitState = false;
 	
@@ -924,7 +924,7 @@ class DFA_Edge {
 	}
 }
 
-class DFA {//é‡Œé¢è£…äº†DFAé‡Œæ‰€æœ‰è¾¹çš„é›†åˆä»¥åŠå¼€å§‹çŠ¶æ€å’Œç»ˆæ­¢çŠ¶æ€ä»¬
+class DFA {//ÀïÃæ×°ÁËDFAÀïËùÓĞ±ßµÄ¼¯ºÏÒÔ¼°¿ªÊ¼×´Ì¬ºÍÖÕÖ¹×´Ì¬ÃÇ
 	Set<DFA_Edge> DFAEdges;
 	Set<DFA_State> DFAStates;
 	
@@ -952,13 +952,13 @@ class DFA {//é‡Œé¢è£…äº†DFAé‡Œæ‰€æœ‰è¾¹çš„é›†åˆä»¥åŠå¼€å§‹çŠ¶æ€å’Œç»ˆæ­¢çŠ¶æ
 	}
 }
 
-/**********************ä»¥ä¸‹ç±»ä¸ºäº†MinimizeDFA**********************/
+/**********************ÒÔÏÂÀàÎªÁËMinimizeDFA**********************/
 
 class miniDFAState {
 	static int number = 0;
 	String miniDFAStateName;
 	Set<DFA_State> DFAStates;
-	//è®¾ç½®çŠ¶æ€æ˜¯ä¸æ˜¯å…¥å£çŠ¶æ€å’Œå‡ºå£çŠ¶æ€
+	//ÉèÖÃ×´Ì¬ÊÇ²»ÊÇÈë¿Ú×´Ì¬ºÍ³ö¿Ú×´Ì¬
 	boolean isEnterState = false;
 	boolean isExitState = false;
 
@@ -1063,7 +1063,7 @@ class miniDFA {
 	}
 }
 
-/**********************ä»¥ä¸‹ç±»ä¸ºäº†è¯æ³•åˆ†æç¨‹åºçš„ç”Ÿæˆç¨‹åº**********************/
+/**********************ÒÔÏÂÀàÎªÁË´Ê·¨·ÖÎö³ÌĞòµÄÉú³É³ÌĞò**********************/
 
 class TransferTable {
 	String tableName;
@@ -1080,15 +1080,15 @@ class TransferTable {
 }
 
 class Token {
-	//typeå¯ä»¥æ˜¯ï¼šidã€reservedWordã€punctuationã€numberã€
+	//type¿ÉÒÔÊÇ£ºid¡¢reservedWord¡¢punctuation¡¢number¡¢
 	String type;
 	
-	//stræ˜¯reservedWordå’Œpunctuationçš„
+	//strÊÇreservedWordºÍpunctuationµÄ
 	String str;
 	
-	//nameæ˜¯idçš„
+	//nameÊÇidµÄ
 	String name;
 	
-	//valueæ˜¯numberçš„
+	//valueÊÇnumberµÄ
 	int value;
 }
