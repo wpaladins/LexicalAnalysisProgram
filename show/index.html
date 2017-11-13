@@ -1,0 +1,90 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <script src="js/re.js"></script>
+    <style>
+        a {
+            width: 300px;
+            height: 100px;
+            padding: 15px;
+            background-color: yellow;
+            box-shadow: 10px 10px grey;
+            font-size: 50px;
+            color: rgb(43, 18, 207)
+        }
+
+        .center {
+            text-align: center;
+            width: 70%;
+            border: 3px solid rgb(29, 153, 211);
+            padding: 20px;
+            margin: auto;
+        }
+
+        .center1 {
+            text-align: center;
+            width: 70%;
+            padding: 20px;
+            margin: auto;
+        }
+
+        p1 {
+            font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+            font-size: 50px;
+            color: rgb(43, 18, 207)
+        }
+
+        p2 {
+            font-family: "Palatino Linotype", "Book Antiqua", Palatino, serif;
+            font-size: 30px;
+            color: rgb(43, 18, 207)
+        }
+
+        .left {
+            display: inline;
+            position: relative;
+            left: 20px;
+        }
+
+        .right {
+            display: inline;
+            position: relative;
+            right: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="center">
+        <p1 id="demo"></p1>
+    </div>
+    </br>
+    <div class="center1">
+        </br>
+        <a href="newnfa/index.html">InteractiveNFA</a>
+        </br>
+        </br>
+        </br>
+        </br>
+        <a href="newdfa/index.html">InteractiveDFA</a>
+        </br>
+        </br>
+        </br>
+        </br>
+        <a href="newminidfa/index.html">InteractiveMiniDFA</a>
+        </br>
+        </br>
+    </div>
+    </br>
+    <div class="center">
+        <div class="right">
+            <p2>@WangXuSheng</p2>
+        </div>
+    </div>
+    <script>
+        document.getElementById("demo").innerHTML = "This is WangXuSheng's NFA & DFA & MiniDFA. Please choose a subpage following. Now the reg is " + re;
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,8 @@
+begin afun
+    int x;
+    int y;
+    x = 5;
+    y = x - 367;
+    scan x;
+    print y;
+    
