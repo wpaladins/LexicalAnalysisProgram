@@ -1,2 +1,4 @@
 # Auto detect text files and perform LF normalization
+*.java linguist-language=java
+*.js linguist-language=java
 * text=auto
